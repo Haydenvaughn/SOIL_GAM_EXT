@@ -115,3 +115,12 @@ soil_gam = function(candidate_mat,arm_weights){
   }
   return(soil.vals)
 }
+
+
+# Creating a combined function that executes all three functions
+soil.gam = function(boosting_iters, y, X, num_splits) {
+  candidate.mat = boost_extract(boosting_iters, y, X)
+  arm.weights = arm_gam(candidate.mat, num_splits, y, X)
+  soil.scores = soil_gam(candidate.mat,arm.weights)
+  return(soil.scores)
+}
