@@ -341,3 +341,11 @@ arm_gam_mboost <- function(candidate_mat, L, y, X, nu, mstop) {
   final_weights <- colMeans(weights.mat)
   return(final_weights)
 }
+
+# Creating a combined function that executes all three functions
+soil.gam.mboost = function(boosting_iters, y, X, num_splits, nu, mstop) {
+  candidate.mat = boost_extract(boosting_iters, y, X)
+  arm.weights = arm_gam_mboost(candidate.mat, num_splits, y, X, nu, mstop)
+  soil.scores = soil_gam(candidate.mat,arm.weights)
+  return(soil.scores)
+}
